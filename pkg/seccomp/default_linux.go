@@ -421,7 +421,6 @@ func DefaultProfile() *Seccomp {
 				"sync_file_range",
 				"syncfs",
 				"sysinfo",
-				"syslog",
 				"tee",
 				"tgkill",
 				"time",
@@ -618,6 +617,7 @@ func DefaultProfile() *Seccomp {
 				"setdomainname",
 				"sethostname",
 				"setns",
+				"syslog",
 			},
 			Action: ActAllow,
 			Args:   []*Arg{},
@@ -962,6 +962,28 @@ func DefaultProfile() *Seccomp {
 			Args:   []*Arg{},
 			Includes: Filter{
 				Caps: []string{"CAP_SYS_NICE"},
+			},
+		},
+		{
+			Names: []string{
+				"syslog",
+			},
+			Action:   ActErrno,
+			Errno:    "EPERM",
+			ErrnoRet: &eperm,
+			Args:     []*Arg{},
+			Excludes: Filter{
+				Caps: []string{"CAP_SYSLOG"},
+			},
+		},
+		{
+			Names: []string{
+				"syslog",
+			},
+			Action: ActAllow,
+			Args:   []*Arg{},
+			Includes: Filter{
+				Caps: []string{"CAP_SYSLOG"},
 			},
 		},
 	}

@@ -428,7 +428,6 @@
 				"sync_file_range",
 				"syncfs",
 				"sysinfo",
-				"syslog",
 				"tee",
 				"tgkill",
 				"time",
@@ -694,7 +693,8 @@
 				"quotactl_fd",
 				"setdomainname",
 				"sethostname",
-				"setns"
+				"setns",
+				"syslog"
 			],
 			"action": "SCMP_ACT_ALLOW",
 			"args": [],
@@ -1153,6 +1153,36 @@
 			"includes": {
 				"caps": [
 					"CAP_SYS_NICE"
+				]
+			},
+			"excludes": {}
+		},
+		{
+			"names": [
+				"syslog"
+			],
+			"action": "SCMP_ACT_ERRNO",
+			"args": [],
+			"comment": "",
+			"includes": {},
+			"excludes": {
+				"caps": [
+					"CAP_SYSLOG"
+				]
+			},
+			"errnoRet": 1,
+			"errno": "EPERM"
+		},
+		{
+			"names": [
+				"syslog"
+			],
+			"action": "SCMP_ACT_ALLOW",
+			"args": [],
+			"comment": "",
+			"includes": {
+				"caps": [
+					"CAP_SYSLOG"
 				]
 			},
 			"excludes": {}
