@@ -77,6 +77,7 @@
 				"pciconfig_iobase",
 				"pciconfig_read",
 				"pciconfig_write",
+				"pivot_root",
 				"sgetmask",
 				"ssetmask",
 				"swapoff",
@@ -123,8 +124,6 @@
 				"clock_gettime64",
 				"clock_nanosleep",
 				"clock_nanosleep_time64",
-				"clone",
-				"clone3",
 				"close",
 				"close_range",
 				"connect",
@@ -168,11 +167,7 @@
 				"flock",
 				"fork",
 				"fremovexattr",
-				"fsconfig",
 				"fsetxattr",
-				"fsmount",
-				"fsopen",
-				"fspick",
 				"fstat",
 				"fstat64",
 				"fstatat64",
@@ -265,9 +260,6 @@
 				"mlockall",
 				"mmap",
 				"mmap2",
-				"mount",
-				"mount_setattr",
-				"move_mount",
 				"mprotect",
 				"mq_getsetattr",
 				"mq_notify",
@@ -290,7 +282,6 @@
 				"nanosleep",
 				"newfstatat",
 				"open",
-				"open_tree",
 				"openat",
 				"openat2",
 				"pause",
@@ -298,7 +289,6 @@
 				"pidfd_send_signal",
 				"pipe",
 				"pipe2",
-				"pivot_root",
 				"pkey_alloc",
 				"pkey_free",
 				"pkey_mprotect",
@@ -385,7 +375,6 @@
 				"setgroups",
 				"setgroups32",
 				"setitimer",
-				"setns",
 				"setpgid",
 				"setpriority",
 				"setregid",
@@ -448,12 +437,9 @@
 				"truncate64",
 				"ugetrlimit",
 				"umask",
-				"umount",
-				"umount2",
 				"uname",
 				"unlink",
 				"unlinkat",
-				"unshare",
 				"utime",
 				"utimensat",
 				"utimensat_time64",
@@ -686,14 +672,29 @@
 		{
 			"names": [
 				"bpf",
+				"clone",
+				"clone3",
 				"fanotify_init",
+				"fsconfig",
+				"fsmount",
+				"fsopen",
+				"fspick",
 				"lookup_dcookie",
+				"mount",
+				"mount_setattr",
+				"move_mount",
+				"open_tree",
+				"pivot_root",
 				"quotactl",
 				"quotactl_fd",
 				"setdomainname",
 				"sethostname",
 				"setns",
-				"syslog"
+				"syslog",
+				"umount",
+				"umount2",
+				"unshare",
+				"unshare"
 			],
 			"action": "SCMP_ACT_ALLOW",
 			"args": [],
@@ -708,13 +709,24 @@
 		{
 			"names": [
 				"fanotify_init",
+				"fsconfig",
+				"fsmount",
+				"fsopen",
+				"fspick",
 				"lookup_dcookie",
+				"mount",
+				"mount_setattr",
+				"move_mount",
+				"open_tree",
 				"perf_event_open",
 				"quotactl",
 				"quotactl_fd",
 				"setdomainname",
 				"sethostname",
-				"setns"
+				"setns",
+				"umount",
+				"umount2",
+				"unshare"
 			],
 			"action": "SCMP_ACT_ERRNO",
 			"args": [],
@@ -727,6 +739,73 @@
 			},
 			"errnoRet": 1,
 			"errno": "EPERM"
+		},
+		{
+			"names": [
+				"clone"
+			],
+			"action": "SCMP_ACT_ALLOW",
+			"args": [
+				{
+					"index": 0,
+					"value": 2114060288,
+					"valueTwo": 0,
+					"op": "SCMP_CMP_MASKED_EQ"
+				}
+			],
+			"comment": "",
+			"includes": {},
+			"excludes": {
+				"caps": [
+					"CAP_SYS_ADMIN"
+				],
+				"arches": [
+					"s390",
+					"s390x"
+				]
+			}
+		},
+		{
+			"names": [
+				"clone"
+			],
+			"action": "SCMP_ACT_ALLOW",
+			"args": [
+				{
+					"index": 1,
+					"value": 2114060288,
+					"valueTwo": 0,
+					"op": "SCMP_CMP_MASKED_EQ"
+				}
+			],
+			"comment": "s390 parameter ordering for clone is different",
+			"includes": {
+				"arches": [
+					"s390",
+					"s390x"
+				]
+			},
+			"excludes": {
+				"caps": [
+					"CAP_SYS_ADMIN"
+				]
+			}
+		},
+		{
+			"names": [
+				"clone3"
+			],
+			"action": "SCMP_ACT_ERRNO",
+			"args": [],
+			"comment": "",
+			"includes": {},
+			"excludes": {
+				"caps": [
+					"CAP_SYS_ADMIN"
+				]
+			},
+			"errnoRet": 38,
+			"errno": "ENOSYS"
 		},
 		{
 			"names": [
