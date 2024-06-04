@@ -825,6 +825,21 @@ func DefaultProfile() *Seccomp {
 			Args: []*Arg{
 				{
 					Index: 0,
+					Value: unix.AF_VSOCK,
+					Op:    OpEqualTo,
+				},
+			},
+		},
+		{
+			Names: []string{
+				"socket",
+			},
+			Action:   ActErrno,
+			Errno:    "EINVAL",
+			ErrnoRet: &einval,
+			Args: []*Arg{
+				{
+					Index: 0,
 					Value: unix.AF_NETLINK,
 					Op:    OpEqualTo,
 				},
