@@ -287,7 +287,6 @@ func DefaultProfile() *Seccomp {
 				"openat",
 				"openat2",
 				"pause",
-				"pidfd_getfd",
 				"pidfd_open",
 				"pidfd_send_signal",
 				"pipe",
@@ -720,6 +719,7 @@ func DefaultProfile() *Seccomp {
 			Names: []string{
 				"kcmp",
 				"process_madvise",
+				"pidfd_getfd",
 			},
 			Action: ActAllow,
 			Args:   []*Arg{},
@@ -731,6 +731,7 @@ func DefaultProfile() *Seccomp {
 			Names: []string{
 				"kcmp",
 				"process_madvise",
+				"pidfd_getfd",
 			},
 			Action:   ActErrno,
 			Errno:    "EPERM",

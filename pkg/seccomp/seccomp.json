@@ -294,7 +294,6 @@
 				"openat",
 				"openat2",
 				"pause",
-				"pidfd_getfd",
 				"pidfd_open",
 				"pidfd_send_signal",
 				"pipe",
@@ -828,7 +827,8 @@
 		{
 			"names": [
 				"kcmp",
-				"process_madvise"
+				"process_madvise",
+				"pidfd_getfd"
 			],
 			"action": "SCMP_ACT_ALLOW",
 			"args": [],
@@ -843,7 +843,8 @@
 		{
 			"names": [
 				"kcmp",
-				"process_madvise"
+				"process_madvise",
+				"pidfd_getfd"
 			],
 			"action": "SCMP_ACT_ERRNO",
 			"args": [],
