@@ -177,7 +177,6 @@ func DefaultProfile() *Seccomp {
 				"futex",
 				"futex_time64",
 				"futimesat",
-				"get_mempolicy",
 				"get_robust_list",
 				"get_thread_area",
 				"getcpu",
@@ -246,7 +245,6 @@ func DefaultProfile() *Seccomp {
 				"lstat",
 				"lstat64",
 				"madvise",
-				"mbind",
 				"membarrier",
 				"memfd_create",
 				"memfd_secret",
@@ -369,7 +367,6 @@ func DefaultProfile() *Seccomp {
 				"sendmmsg",
 				"sendmsg",
 				"sendto",
-				"set_mempolicy",
 				"set_robust_list",
 				"set_thread_area",
 				"set_tid_address",
@@ -939,6 +936,32 @@ func DefaultProfile() *Seccomp {
 			Args:   []*Arg{},
 			Includes: Filter{
 				Caps: []string{"CAP_PERFMON"},
+			},
+		},
+		{
+			Names: []string{
+				"mbind",
+				"get_mempolicy",
+				"set_mempolicy",
+			},
+			Action:   ActErrno,
+			Errno:    "EPERM",
+			ErrnoRet: &eperm,
+			Args:     []*Arg{},
+			Excludes: Filter{
+				Caps: []string{"CAP_SYS_NICE"},
+			},
+		},
+		{
+			Names: []string{
+				"mbind",
+				"get_mempolicy",
+				"set_mempolicy",
+			},
+			Action: ActAllow,
+			Args:   []*Arg{},
+			Includes: Filter{
+				Caps: []string{"CAP_SYS_NICE"},
 			},
 		},
 	}

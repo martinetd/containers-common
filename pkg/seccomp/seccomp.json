@@ -184,7 +184,6 @@
 				"futex",
 				"futex_time64",
 				"futimesat",
-				"get_mempolicy",
 				"get_robust_list",
 				"get_thread_area",
 				"getcpu",
@@ -253,7 +252,6 @@
 				"lstat",
 				"lstat64",
 				"madvise",
-				"mbind",
 				"membarrier",
 				"memfd_create",
 				"memfd_secret",
@@ -376,7 +374,6 @@
 				"sendmmsg",
 				"sendmsg",
 				"sendto",
-				"set_mempolicy",
 				"set_robust_list",
 				"set_thread_area",
 				"set_tid_address",
@@ -1122,6 +1119,40 @@
 			"includes": {
 				"caps": [
 					"CAP_PERFMON"
+				]
+			},
+			"excludes": {}
+		},
+		{
+			"names": [
+				"mbind",
+				"get_mempolicy",
+				"set_mempolicy"
+			],
+			"action": "SCMP_ACT_ERRNO",
+			"args": [],
+			"comment": "",
+			"includes": {},
+			"excludes": {
+				"caps": [
+					"CAP_SYS_NICE"
+				]
+			},
+			"errnoRet": 1,
+			"errno": "EPERM"
+		},
+		{
+			"names": [
+				"mbind",
+				"get_mempolicy",
+				"set_mempolicy"
+			],
+			"action": "SCMP_ACT_ALLOW",
+			"args": [],
+			"comment": "",
+			"includes": {
+				"caps": [
+					"CAP_SYS_NICE"
 				]
 			},
 			"excludes": {}
